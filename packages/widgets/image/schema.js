@@ -1,4 +1,4 @@
-module.exports = {
+const styleProps = {
   schema: {
     title: "Schema default properties",
     type: "object",
@@ -68,3 +68,5 @@ module.exports = {
     },
   },
 };
+
+export default { styleProps, settingProps: styleProps, eventProps: styleProps };
