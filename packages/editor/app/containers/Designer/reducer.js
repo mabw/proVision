@@ -1,5 +1,7 @@
 import produce from "immer";
+import Widgets from "widgets";
 
+import { Root } from "./components/RootWidget";
 import CONSTANTS from "./constants";
 
 export const initialState = {
@@ -10,9 +12,9 @@ export const initialState = {
       parentId: null,
       childrenId: ["abc123", "cde123"],
       index: 0,
-      styleProps: {},
-      settingProps: {},
-      eventProps: {},
+      styleProps: { ...Root.styleProps.formData },
+      settingProps: { ...Root.settingProps.formData },
+      eventProps: { ...Root.eventProps.formData },
     },
     abc123: {
       type: "BasicText",
@@ -20,9 +22,9 @@ export const initialState = {
       parentId: "root",
       childrenId: [],
       index: 0,
-      styleProps: {},
-      settingProps: {},
-      eventProps: {},
+      styleProps: { ...Widgets.BasicText.styleProps.formData },
+      settingProps: { ...Widgets.BasicText.settingProps.formData },
+      eventProps: { ...Widgets.BasicText.eventProps.formData },
     },
     cde123: {
       type: "BasicText",
@@ -30,9 +32,9 @@ export const initialState = {
       parentId: "root",
       childrenId: [],
       index: 1,
-      styleProps: {},
-      settingProps: {},
-      eventProps: {},
+      styleProps: { ...Widgets.BasicText.styleProps.formData },
+      settingProps: { ...Widgets.BasicText.settingProps.formData },
+      eventProps: { ...Widgets.BasicText.eventProps.formData },
     },
   },
   selectedNodeId: "root",

@@ -4,6 +4,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import Widgets from "widgets";
 import Form from "react-jsonschema-form";
+import { isEmpty } from "lodash";
 
 import {
   makeSelectStyleFormData,
@@ -28,26 +29,46 @@ const SettingPanels = ({
   const styleFormSchema = Widgets[selectedNodeType].styleProps.schema;
   const settingFormSchema = Widgets[selectedNodeType].settingProps.schema;
   const eventFormSchema = Widgets[selectedNodeType].eventProps.schema;
+
   return (
     <>
-      <strong>Style setting</strong>
-      <Form
-        schema={styleFormSchema}
-        formData={styleFormData}
-        onSubmit={(dateSet) => onChangeStyleForm(dateSet.formData)}
-      />
-      <strong>Props setting</strong>
-      <Form
-        schema={settingFormSchema}
-        formData={settingFormData}
-        onSubmit={(dateSet) => onChangeSettingForm(dateSet.formData)}
-      />
-      <strong>Event setting</strong>
-      <Form
-        schema={eventFormSchema}
-        formData={eventFormData}
-        onSubmit={(dateSet) => onChangeEventForm(dateSet.formData)}
-      />
+      {!isEmpty(styleFormSchema) && (
+        <>
+          <strong>Style setting</strong>
+          <Form
+            tagName="div"
+            schema={styleFormSchema}
+            formData={styleFormData}
+            onChange={(dateSet) => onChangeStyleForm(dateSet.formData)}
+          >
+            <button type="submit" className="hidden" />
+          </Form>
+        </>
+      )}
+      {!isEmpty(settingFormSchema) && (
+        <>
+          <strong>Props setting</strong>
+          <Form
+            schema={settingFormSchema}
+            formData={settingFormData}
+            onChange={(dateSet) => onChangeSettingForm(dateSet.formData)}
+          >
+            <button type="submit" className="hidden" />
+          </Form>
+        </>
+      )}
+      {!isEmpty(eventFormSchema) && (
+        <>
+          <strong>Event setting</strong>
+          <Form
+            schema={eventFormSchema}
+            formData={eventFormData}
+            onChange={(dateSet) => onChangeEventForm(dateSet.formData)}
+          >
+            <button type="submit" className="hidden" />
+          </Form>
+        </>
+      )}
     </>
   );
 };

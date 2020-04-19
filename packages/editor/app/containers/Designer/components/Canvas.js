@@ -5,11 +5,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import Widgets from "widgets";
 
-import {
-  makeSelectNodes,
-  makeSelectSelectedNodeId,
-  makeSelectRoot,
-} from "../selectors";
+import { makeSelectNodes, makeSelectSelectedNodeId } from "../selectors";
 import designerActions from "../actions";
 import { Root } from "./RootWidget";
 import { CanvasContainer } from "./canvas.styles";
@@ -31,11 +27,17 @@ const WidgetHolder = ({ nodeId }) => {
   );
 };
 
-Widgets.Root = Root;
-console.log("Widgets: ", Widgets);
-const Canvas = ({ nodes, selectedNodeId, root, onSelectNode }) => {
+// TODO: 待优化
+const Canvas = ({ nodes, selectedNodeId, onSelectNode }) => {
   const RenderChildren = (nodeId) => {
     const Component = Widgets[nodes[nodeId].type];
+    const node = nodes[nodeId];
+    const props = {
+      ...node.styleProps,
+      ...node.settingProps,
+      ...node.eventProps,
+    };
+
     return (
       <div
         key={nodeId}
@@ -45,7 +47,7 @@ const Canvas = ({ nodes, selectedNodeId, root, onSelectNode }) => {
         }}
         className={selectedNodeId === nodeId ? "designer_selected-node" : ""}
       >
-        <Component.template>
+        <Component.template {...props}>
           {nodes[nodeId].childrenId.map((childId) => RenderChildren(childId))}
         </Component.template>
       </div>
@@ -60,7 +62,6 @@ const Canvas = ({ nodes, selectedNodeId, root, onSelectNode }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  root: makeSelectRoot(),
   nodes: makeSelectNodes(),
   selectedNodeId: makeSelectSelectedNodeId(),
 });

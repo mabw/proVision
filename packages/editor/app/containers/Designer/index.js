@@ -3,6 +3,7 @@ import React, { memo } from "react";
 import { Grid, Row, Col } from "react-bootstrap";
 import HTMLBackend from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import Widgets from "widgets";
 
 import { useInjectReducer } from "utils/injectReducer";
 import reducer from "./reducer";
@@ -10,7 +11,9 @@ import reducer from "./reducer";
 import { WidgetsPool } from "./components/WidgetsPool";
 import Canvas from "./components/Canvas";
 import SettingPanels from "./components/SettingPanels";
+import { Root } from "./components/RootWidget";
 
+Widgets.Root = Root;
 const key = "designer";
 
 const HomePage = () => {

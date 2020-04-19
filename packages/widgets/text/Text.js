@@ -1,10 +1,10 @@
 import React from "react";
 import schema from "./schema";
 
-export const Text = ({ text }) => {
-  return <div>{text}</div>;
+export const Text = ({ content }) => {
+  return <div>{content}</div>;
 };
 
 Text.defaultProps = {
-  text: schema.settingProps.formData.content,
+  content: schema.settingProps.formData.content,
 };
