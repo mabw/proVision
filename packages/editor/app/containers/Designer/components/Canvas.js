@@ -7,24 +7,32 @@ import Widgets from "widgets";
 
 import { makeSelectNodes, makeSelectSelectedNodeId } from "../selectors";
 import designerActions from "../actions";
-import { Root } from "./RootWidget";
 import { CanvasContainer } from "./canvas.styles";
 
-const WidgetHolder = ({ nodeId }) => {
+const WidgetHolder = ({ nodeId, children }) => {
+  // console.log("nodeId: ", nodeId);
+  const node = nodeId;
+  const onDrop = (item) => {
+    console.log("node", node);
+  };
+
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: "box",
-    drop: (item) => console.log(item),
+    drop: (item, monitor) => {
+      if (monitor.didDrop()) return;
+      console.log("nodeId: ", nodeId);
+    },
+    hover: (item, monitor) => {
+      // console.log("monitor: ", monitor);
+      // console.log("hover item: ", item);
+    },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
     }),
   });
-  console.log("isOver,canDrop: ", isOver, canDrop);
-  return (
-    <div ref={drop}>
-      <Root.template>{children}</Root.template>
-    </div>
-  );
+  // console.log("isOver,canDrop: ", isOver, canDrop);
+  return <div ref={drop}>{children}</div>;
 };
 
 // TODO: 待优化
@@ -47,9 +55,11 @@ const Canvas = ({ nodes, selectedNodeId, onSelectNode }) => {
         }}
         className={selectedNodeId === nodeId ? "designer_selected-node" : ""}
       >
-        <Component.template {...props}>
-          {nodes[nodeId].childrenId.map((childId) => RenderChildren(childId))}
-        </Component.template>
+        <WidgetHolder nodeId={nodeId}>
+          <Component.template {...props}>
+            {nodes[nodeId].childrenId.map((childId) => RenderChildren(childId))}
+          </Component.template>
+        </WidgetHolder>
       </div>
     );
   };
