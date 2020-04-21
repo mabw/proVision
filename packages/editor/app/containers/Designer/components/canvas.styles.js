@@ -8,4 +8,10 @@ export const CanvasContainer = styled.div`
   .designer_selected-node {
     outline: 1px dashed blue;
   }
+  .designer_node:hover {
+    outline: 1px dashed red;
+  }
+  .designer_widget-holder {
+    pointer-events: none;
+  }
 `;

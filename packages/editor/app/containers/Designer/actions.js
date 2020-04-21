@@ -1,10 +1,10 @@
 import CONSTANTS from "./constants";
 
-const createNode = (widgetType, parentId) => {
+const createNode = (widgetType, nodeId) => {
   return {
     type: CONSTANTS.CREATE_NODE,
     widgetType,
-    parentId,
+    nodeId,
   };
 };
 
