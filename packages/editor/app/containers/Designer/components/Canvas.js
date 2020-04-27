@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { useState, memo, useCallback, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -11,15 +11,27 @@ import designerActions from "../actions";
 import { CanvasContainer } from "./canvas.styles";
 
 const WidgetHolder = ({ nodeId, children, onSelectNode, onCreateNode }) => {
-  const documentHandler = (e) => {
+  const handleDomClick = (e) => {
     onSelectNode(nodeId);
     e.stopPropagation();
   };
 
+  const handleDomMouseover = (e) => {
+    // console.log("e: ", e.target.id);
+    // console.log("e: ", e.target.className);
+    console.log("nodeId", nodeId);
+    console.log("e: ", e.target.getBoundingClientRect());
+    // e.stopPropagation();
+  };
+
   useEffect(() => {
     const currentDom = document.querySelector(`#${nodeId}`);
-    currentDom.addEventListener("click", documentHandler);
-    return () => currentDom.removeEventListener("click", documentHandler);
+    currentDom.addEventListener("click", handleDomClick);
+    currentDom.addEventListener("mouseover", handleDomMouseover);
+    return () => {
+      currentDom.removeEventListener("click", handleDomClick);
+      currentDom.removeEventListener("mouseover", handleDomMouseover);
+    };
   }, []);
 
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -57,6 +69,7 @@ const Canvas = ({ nodes, selectedNodeId, onSelectNode, onCreateNode }) => {
         ...node.settingProps,
         ...node.eventProps,
       };
+
       return (
         <div
           key={nodeId}

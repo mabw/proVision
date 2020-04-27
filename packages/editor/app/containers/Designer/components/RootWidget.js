@@ -6,6 +6,7 @@ const WrapRoot = styled.div`
   height: 736px;
   background: white;
   margin: 0 auto;
+  position: relative;
 `;
 
 const styleProps = {

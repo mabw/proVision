@@ -2,6 +2,7 @@ import produce from "immer";
 import Widgets from "widgets";
 import cryptoRandomString from "crypto-random-string";
 
+import { nodesOperator } from "../../utils/nodesOperator";
 import { Root } from "./components/RootWidget";
 import CONSTANTS from "./constants";
 
@@ -46,16 +47,14 @@ const designerReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case CONSTANTS.CREATE_NODE:
-        const newNodeId = cryptoRandomString({ length: 10 });
+        const newNodeId = "n" + cryptoRandomString({ length: 9 });
         draft.nodes[newNodeId] = {
           type: action.widgetType,
           displayName: action.widgetType,
           parentId: "root",
           childrenId: [],
           index: 1,
-          styleProps: { ...Widgets[action.widgetType].styleProps.formData },
-          settingProps: { ...Widgets[action.widgetType].settingProps.formData },
-          eventProps: { ...Widgets[action.widgetType].eventProps.formData },
+          ...nodesOperator.setDefaultProps(action.widgetType),
         };
         draft.nodes["root"].childrenId.push(newNodeId);
         break;

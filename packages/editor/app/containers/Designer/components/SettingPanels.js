@@ -41,7 +41,7 @@ const SettingPanels = ({
             formData={styleFormData}
             onChange={(dateSet) => onChangeStyleForm(dateSet.formData)}
           >
-            <button type="submit" className="hidden" />
+            <button type="submit" className="d-none" />
           </Form>
         </>
       )}
@@ -53,7 +53,7 @@ const SettingPanels = ({
             formData={settingFormData}
             onChange={(dateSet) => onChangeSettingForm(dateSet.formData)}
           >
-            <button type="submit" className="hidden" />
+            <button type="submit" className="d-none" />
           </Form>
         </>
       )}
@@ -65,7 +65,7 @@ const SettingPanels = ({
             formData={eventFormData}
             onChange={(dateSet) => onChangeEventForm(dateSet.formData)}
           >
-            <button type="submit" className="hidden" />
+            <button type="submit" className="d-none" />
           </Form>
         </>
       )}

@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { Grid, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import HTMLBackend from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import Widgets from "widgets";
@@ -16,13 +16,13 @@ import { Root } from "./components/RootWidget";
 Widgets.Root = Root;
 const key = "designer";
 
-const HomePage = () => {
+const DesignerPage = () => {
   useInjectReducer({ key, reducer });
 
   return (
     <DndProvider backend={HTMLBackend}>
-      <Grid fluid>
-        <Row className="show-grid">
+      <Container fluid>
+        <Row>
           <Col md={3}>
             <WidgetsPool />
           </Col>
@@ -33,9 +33,9 @@ const HomePage = () => {
             <SettingPanels />
           </Col>
         </Row>
-      </Grid>
+      </Container>
     </DndProvider>
   );
 };
 
-export default memo(HomePage);
+export default memo(DesignerPage);

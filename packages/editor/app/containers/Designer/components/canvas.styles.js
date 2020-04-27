@@ -6,9 +6,11 @@ export const CanvasContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   .designer_selected-node {
+    position: relative;
     outline: 1px dashed blue;
   }
   .designer_node:hover {
+    position: relative;
     outline: 1px dashed red;
   }
   .designer_widget-holder {
