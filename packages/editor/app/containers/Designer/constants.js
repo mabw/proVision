@@ -6,6 +6,7 @@ export const SET_SETTING_PROPS = "proVision/Designer/SET_SETTING_PROPS";
 export const SET_EVENT_PROPS = "proVision/Designer/SET_EVENT_PROPS";
 export const TOGGLE_HIDDEN = "proVision/Designer/TOGGLE_HIDDEN";
 export const SELECT_NODE = "proVision/Designer/SELECT_NODE";
+export const HOVER_NODE = "proVision/Designer/HOVER_NODE";
 
 export default {
   CREATE_NODE,
@@ -16,4 +17,5 @@ export default {
   SET_EVENT_PROPS,
   TOGGLE_HIDDEN,
   SELECT_NODE,
+  HOVER_NODE,
 };

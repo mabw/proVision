@@ -40,6 +40,7 @@ export const initialState = {
     },
   },
   selectedNodeId: "root",
+  hoveredNodeId: "",
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -60,6 +61,9 @@ const designerReducer = (state = initialState, action) =>
         break;
       case CONSTANTS.SELECT_NODE:
         draft.selectedNodeId = action.nodeId;
+        break;
+      case CONSTANTS.HOVER_NODE:
+        draft.hoveredNodeId = action.nodeId;
         break;
       case CONSTANTS.SET_STYLE_PROPS:
         draft.nodes[state.selectedNodeId].styleProps = action.props;

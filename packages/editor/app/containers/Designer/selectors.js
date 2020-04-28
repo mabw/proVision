@@ -15,6 +15,12 @@ const makeSelectSelectedNodeId = () =>
     (designerState) => designerState.selectedNodeId
   );
 
+const makeSelectHoveredNodeId = () =>
+  createSelector(
+    selectDesigner,
+    (designerState) => designerState.hoveredNodeId
+  );
+
 const makeSelectRoot = () =>
   createSelector(
     selectDesigner,
@@ -48,4 +54,5 @@ export {
   makeSelectStyleFormData,
   makeSelectSettingFormData,
   makeSelectEventFormData,
+  makeSelectHoveredNodeId,
 };

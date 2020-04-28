@@ -1,5 +1,4 @@
-import React, { useState, memo, useCallback, useEffect } from "react";
-import { useDrop } from "react-dnd";
+import React, { memo, useCallback } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -9,57 +8,10 @@ import classnames from "classnames";
 import { makeSelectNodes, makeSelectSelectedNodeId } from "../selectors";
 import designerActions from "../actions";
 import { CanvasContainer } from "./canvas.styles";
-
-const WidgetHolder = ({ nodeId, children, onSelectNode, onCreateNode }) => {
-  const handleDomClick = (e) => {
-    onSelectNode(nodeId);
-    e.stopPropagation();
-  };
-
-  const handleDomMouseover = (e) => {
-    // console.log("e: ", e.target.id);
-    // console.log("e: ", e.target.className);
-    console.log("nodeId", nodeId);
-    console.log("e: ", e.target.getBoundingClientRect());
-    // e.stopPropagation();
-  };
-
-  useEffect(() => {
-    const currentDom = document.querySelector(`#${nodeId}`);
-    currentDom.addEventListener("click", handleDomClick);
-    currentDom.addEventListener("mouseover", handleDomMouseover);
-    return () => {
-      currentDom.removeEventListener("click", handleDomClick);
-      currentDom.removeEventListener("mouseover", handleDomMouseover);
-    };
-  }, []);
-
-  const [{ isOver, canDrop }, drop] = useDrop({
-    accept: "box",
-    drop: (item, monitor) => {
-      if (monitor.didDrop()) return;
-      onCreateNode(item.widgetType, nodeId);
-    },
-    hover: (item, monitor) => {
-      // console.log("monitor: ", monitor);
-      // console.log("hover item: ", item);
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
-
-  // console.log("isOver,canDrop: ", isOver, canDrop);
-  return (
-    <div ref={drop} id={nodeId}>
-      {children}
-    </div>
-  );
-};
+import WidgetHolder from "./WidgetHolder";
 
 // TODO: 待优化
-const Canvas = ({ nodes, selectedNodeId, onSelectNode, onCreateNode }) => {
+const Canvas = ({ nodes, selectedNodeId }) => {
   const RenderChildren = useCallback(
     (nodeId) => {
       const Component = Widgets[nodes[nodeId].type];
@@ -69,20 +21,16 @@ const Canvas = ({ nodes, selectedNodeId, onSelectNode, onCreateNode }) => {
         ...node.settingProps,
         ...node.eventProps,
       };
-
+      console.log(4444);
       return (
         <div
           key={nodeId}
           onClickCapture={(e) => e.stopPropagation()}
-          className={classnames("designer_node", {
+          className={classnames({
             "designer_selected-node": selectedNodeId === nodeId,
           })}
         >
-          <WidgetHolder
-            nodeId={nodeId}
-            onSelectNode={onSelectNode}
-            onCreateNode={onCreateNode}
-          >
+          <WidgetHolder nodeId={nodeId}>
             <Component.template {...props} className={"designer_widget-holder"}>
               {nodes[nodeId].childrenId.map((childId) =>
                 RenderChildren(childId)
@@ -105,7 +53,6 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSelectNode: (nodeId) => dispatch(designerActions.selectNode(nodeId)),
     onCreateNode: (widgetType, nodeId) =>
       dispatch(designerActions.createNode(widgetType, nodeId)),
   };

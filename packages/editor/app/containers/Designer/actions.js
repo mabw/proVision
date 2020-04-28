@@ -58,6 +58,13 @@ const selectNode = (nodeId) => {
   };
 };
 
+const hoverNode = (nodeId) => {
+  return {
+    type: CONSTANTS.HOVER_NODE,
+    nodeId,
+  };
+};
+
 export default {
   createNode,
   deleteNode,
@@ -67,4 +74,5 @@ export default {
   setEventProps,
   toggleHidden,
   selectNode,
+  hoverNode,
 };
