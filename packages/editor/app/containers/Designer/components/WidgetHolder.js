@@ -1,5 +1,5 @@
-import React, { memo, useEffect } from "react";
-import { useDrop } from "react-dnd";
+import React, { memo, useEffect, useRef } from "react";
+import { useDrop, useDrag } from "react-dnd";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -16,10 +16,13 @@ const WidgetHolder = ({
   nodeId,
   children,
   hoveredNodeId,
+  selectedNodeId,
   onSelectNode,
   onCreateNode,
   onHoverNode,
 }) => {
+  const ref = useRef(null);
+
   const handleDomClick = (e) => {
     onSelectNode(nodeId);
     e.stopPropagation();
@@ -58,23 +61,45 @@ const WidgetHolder = ({
       canDrop: monitor.canDrop(),
     }),
   });
+
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: "box" },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  //   drag(drop(ref));
+
   // console.log("isOver,canDrop: ", isOver, canDrop);
   return (
-    <div className={classnames({ designer_node: nodeId === hoveredNodeId })}>
+    <>
       <div
         ref={drop}
         id={nodeId}
+        className={classnames({ designer_node: nodeId === hoveredNodeId })}
         onMouseOver={(e) => {
           onHoverNode(nodeId);
           e.stopPropagation();
         }}
       >
         {children}
+        <div
+          ref={drag}
+          className={classnames({
+            "designer_node-placeholder":
+              nodeId === hoveredNodeId || nodeId === selectedNodeId,
+            designer_hidden:
+              nodeId != hoveredNodeId && nodeId != selectedNodeId,
+          })}
+          onMouseOver={(e) => {
+            onHoverNode(nodeId);
+            e.stopPropagation();
+          }}
+        >
+          hello<button>sdfsdfdsfs</button>
+        </div>
       </div>
-      <div className="designer_node-placeholder">
-        hello<button>sdfsdfdsfs</button>
-      </div>
-    </div>
+    </>
   );
 };
 

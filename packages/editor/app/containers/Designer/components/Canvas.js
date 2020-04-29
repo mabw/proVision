@@ -21,7 +21,6 @@ const Canvas = ({ nodes, selectedNodeId }) => {
         ...node.settingProps,
         ...node.eventProps,
       };
-      console.log(4444);
       return (
         <div
           key={nodeId}
@@ -31,7 +30,7 @@ const Canvas = ({ nodes, selectedNodeId }) => {
           })}
         >
           <WidgetHolder nodeId={nodeId}>
-            <Component.template {...props} className={"designer_widget-holder"}>
+            <Component.template {...props}>
               {nodes[nodeId].childrenId.map((childId) =>
                 RenderChildren(childId)
               )}
