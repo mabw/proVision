@@ -32,10 +32,8 @@ const WidgetHolder = ({
   useEffect(() => {
     const currentDom = document.querySelector(`#${nodeId}`);
     currentDom.addEventListener("click", handleDomClick);
-    // currentDom.addEventListener("mouseover", handleDomMouseover);
     return () => {
       currentDom.removeEventListener("click", handleDomClick);
-      // currentDom.removeEventListener("mouseover", handleDomMouseover);
     };
   }, []);
 
@@ -52,19 +50,19 @@ const WidgetHolder = ({
       if (dragIndex === hoverIndex) {
         return;
       }
-      setCoveredId(nodeId);
-      // const hoverBoundingRect = ref.current.getBoundingClientRect();
-      // const hoverMiddleY =
-      //   (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      // const clientOffset = monitor.getClientOffset();
-      // const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      //   return;
-      // }
-      // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      //   return;
-      // }
-      // moveCard(dragIndex, hoverIndex)
+      const hoverBoundingRect = ref.current.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      if (hoverClientY < hoverMiddleY) {
+        setCoveredId(nodeId, "before");
+        return;
+      }
+      if (hoverClientY > hoverMiddleY) {
+        setCoveredId(nodeId, "after");
+        return;
+      }
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

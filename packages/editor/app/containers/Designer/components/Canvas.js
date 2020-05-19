@@ -12,46 +12,46 @@ import WidgetHolder from "./WidgetHolder";
 
 // TODO: 待优化
 const Canvas = ({ nodes, selectedNodeId }) => {
-  const [coveredId, setCoveredId] = useState("");
+  const [coveredId, setCoveredId] = useState({ id: "", direction: "" });
+  console.log("coveredId: ", coveredId.direction);
 
-  const handleSetCoverId = (nodeId) => {
-    if (nodeId !== "root" && coveredId !== nodeId) {
-      setCoveredId(nodeId);
+  const handleSetCoverId = (id, direction) => {
+    if (id !== "root") {
+      setCoveredId({ id, direction });
     }
   };
 
-  const RenderChildren = useCallback(
-    (nodeId) => {
-      const Component = Widgets[nodes[nodeId].type];
-      const node = nodes[nodeId];
-      const props = {
-        ...node.styleProps,
-        ...node.settingProps,
-        ...node.eventProps,
-      };
-      return (
-        <div
-          key={nodeId}
-          onClickCapture={(e) => e.stopPropagation()}
-          className={classnames({
-            "designer_selected-node": selectedNodeId === nodeId,
-            "designer_covered-widget": coveredId === nodeId,
-          })}
-        >
-          <WidgetHolder nodeId={nodeId} setCoveredId={handleSetCoverId}>
-            <Component.template {...props}>
-              {nodes[nodeId].childrenId.map((childId) =>
-                RenderChildren(childId)
-              )}
-            </Component.template>
-          </WidgetHolder>
-        </div>
-      );
-    },
-    [nodes, selectedNodeId, coveredId]
-  );
+  const RenderChildren = (nodeId) => {
+    const Component = Widgets[nodes[nodeId].type];
+    const node = nodes[nodeId];
+    const props = {
+      ...node.styleProps,
+      ...node.settingProps,
+      ...node.eventProps,
+    };
+    return (
+      <div
+        key={nodeId}
+        onClickCapture={(e) => e.stopPropagation()}
+        className={classnames({
+          "designer_selected-node": selectedNodeId === nodeId,
+          "designer_covered-widget": coveredId.id === nodeId,
+        })}
+      >
+        <WidgetHolder nodeId={nodeId} setCoveredId={handleSetCoverId}>
+          <Component.template {...props}>
+            {nodes[nodeId].childrenId.map((childId) => RenderChildren(childId))}
+          </Component.template>
+        </WidgetHolder>
+      </div>
+    );
+  };
 
-  return <CanvasContainer>{RenderChildren("root")}</CanvasContainer>;
+  return (
+    <CanvasContainer direction={coveredId.direction}>
+      {RenderChildren("root")}
+    </CanvasContainer>
+  );
 };
 
 const mapStateToProps = createStructuredSelector({
