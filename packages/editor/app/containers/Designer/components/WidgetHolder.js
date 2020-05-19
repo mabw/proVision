@@ -20,6 +20,7 @@ const WidgetHolder = ({
   onSelectNode,
   onCreateNode,
   onHoverNode,
+  setCoveredId,
 }) => {
   const ref = useRef(null);
 
@@ -27,14 +28,6 @@ const WidgetHolder = ({
     onSelectNode(nodeId);
     e.stopPropagation();
   };
-
-  // const handleDomMouseover = (e) => {
-  //   // console.log("e: ", e.target.id);
-  //   // console.log("e: ", e.target.className);
-  //   console.log("nodeId", nodeId);
-  //   console.log("e: ", e.target.getBoundingClientRect());
-  //   // e.stopPropagation();
-  // };
 
   useEffect(() => {
     const currentDom = document.querySelector(`#${nodeId}`);
@@ -49,12 +42,29 @@ const WidgetHolder = ({
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: "box",
     drop: (item, monitor) => {
+      setCoveredId("");
       if (monitor.didDrop()) return;
       onCreateNode(item.widgetType, nodeId);
     },
     hover: (item, monitor) => {
-      // console.log("monitor: ", monitor);
-      // console.log("hover item: ", item);
+      const dragIndex = item.nodeId;
+      const hoverIndex = nodeId;
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+      setCoveredId(nodeId);
+      // const hoverBoundingRect = ref.current.getBoundingClientRect();
+      // const hoverMiddleY =
+      //   (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // const clientOffset = monitor.getClientOffset();
+      // const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      //   return;
+      // }
+      // if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      //   return;
+      // }
+      // moveCard(dragIndex, hoverIndex)
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -63,18 +73,15 @@ const WidgetHolder = ({
   });
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: "box" },
+    item: { type: "box", nodeId },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
-  //   drag(drop(ref));
-
-  // console.log("isOver,canDrop: ", isOver, canDrop);
   return (
     <>
       <div
-        ref={drop}
+        ref={drop(ref)}
         id={nodeId}
         className={classnames({ designer_node: nodeId === hoveredNodeId })}
         onMouseOver={(e) => {

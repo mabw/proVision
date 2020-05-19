@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
@@ -12,6 +12,14 @@ import WidgetHolder from "./WidgetHolder";
 
 // TODO: 待优化
 const Canvas = ({ nodes, selectedNodeId }) => {
+  const [coveredId, setCoveredId] = useState("");
+
+  const handleSetCoverId = (nodeId) => {
+    if (nodeId !== "root" && coveredId !== nodeId) {
+      setCoveredId(nodeId);
+    }
+  };
+
   const RenderChildren = useCallback(
     (nodeId) => {
       const Component = Widgets[nodes[nodeId].type];
@@ -27,9 +35,10 @@ const Canvas = ({ nodes, selectedNodeId }) => {
           onClickCapture={(e) => e.stopPropagation()}
           className={classnames({
             "designer_selected-node": selectedNodeId === nodeId,
+            "designer_covered-widget": coveredId === nodeId,
           })}
         >
-          <WidgetHolder nodeId={nodeId}>
+          <WidgetHolder nodeId={nodeId} setCoveredId={handleSetCoverId}>
             <Component.template {...props}>
               {nodes[nodeId].childrenId.map((childId) =>
                 RenderChildren(childId)
@@ -39,7 +48,7 @@ const Canvas = ({ nodes, selectedNodeId }) => {
         </div>
       );
     },
-    [nodes, selectedNodeId]
+    [nodes, selectedNodeId, coveredId]
   );
 
   return <CanvasContainer>{RenderChildren("root")}</CanvasContainer>;

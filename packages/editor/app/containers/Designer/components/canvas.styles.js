@@ -29,4 +29,17 @@ export const CanvasContainer = styled.div`
   .designer_node:hover .designer_widget-holder {
     pointer-events: none;
   }
+  .designer_covered-widget {
+    position: relative;
+    &::after {
+      width: 100%;
+      content: "";
+      position: absolute;
+      height: 1px;
+      left: 0;
+      top: 0;
+      z-index: 10;
+      background: green;
+    }
+  }
 `;
