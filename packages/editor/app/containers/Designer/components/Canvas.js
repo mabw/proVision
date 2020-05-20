@@ -4,6 +4,7 @@ import { compose } from "redux";
 import { createStructuredSelector } from "reselect";
 import Widgets from "widgets";
 import classnames from "classnames";
+import { isEqual } from "lodash";
 
 import { makeSelectNodes, makeSelectSelectedNodeId } from "../selectors";
 import designerActions from "../actions";
@@ -13,10 +14,9 @@ import WidgetHolder from "./WidgetHolder";
 // TODO: 待优化
 const Canvas = ({ nodes, selectedNodeId }) => {
   const [coveredId, setCoveredId] = useState({ id: "", direction: "" });
-  console.log("coveredId: ", coveredId.direction);
 
   const handleSetCoverId = (id, direction) => {
-    if (id !== "root") {
+    if (id !== "root" && !isEqual(coveredId, { id, direction })) {
       setCoveredId({ id, direction });
     }
   };

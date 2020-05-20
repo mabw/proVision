@@ -20,6 +20,8 @@ const WidgetHolder = ({
   onSelectNode,
   onCreateNode,
   onHoverNode,
+  onMoveNode,
+  onDeleteNode,
   setCoveredId,
 }) => {
   const ref = useRef(null);
@@ -40,8 +42,26 @@ const WidgetHolder = ({
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: "box",
     drop: (item, monitor) => {
+      if (item.from === "canvas") {
+        const dragIndex = item.nodeId;
+        const hoverIndex = nodeId;
+        if (dragIndex === hoverIndex) {
+          return;
+        }
+        const hoverBoundingRect = ref.current.getBoundingClientRect();
+        const hoverMiddleY =
+          (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        const clientOffset = monitor.getClientOffset();
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        if (hoverClientY < hoverMiddleY) {
+          onMoveNode(item.nodeId, nodeId, "before");
+        }
+        if (hoverClientY > hoverMiddleY) {
+          onMoveNode(item.nodeId, nodeId, "after");
+        }
+      }
+      if (monitor.didDrop()) return; // stop propagation, in case of adding multiply components
       setCoveredId("");
-      if (monitor.didDrop()) return;
       onCreateNode(item.widgetType, nodeId);
     },
     hover: (item, monitor) => {
@@ -53,15 +73,17 @@ const WidgetHolder = ({
       const hoverBoundingRect = ref.current.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (hoverClientY < hoverMiddleY) {
-        setCoveredId(nodeId, "before");
-        return;
-      }
-      if (hoverClientY > hoverMiddleY) {
-        setCoveredId(nodeId, "after");
-        return;
+      if (monitor) {
+        const clientOffset = monitor.getClientOffset();
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        if (hoverClientY < hoverMiddleY) {
+          setCoveredId(nodeId, "before");
+          return;
+        }
+        if (hoverClientY > hoverMiddleY) {
+          setCoveredId(nodeId, "after");
+          return;
+        }
       }
     },
     collect: (monitor) => ({
@@ -71,7 +93,7 @@ const WidgetHolder = ({
   });
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: "box", nodeId },
+    item: { type: "box", nodeId, from: "canvas" },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -101,7 +123,7 @@ const WidgetHolder = ({
             e.stopPropagation();
           }}
         >
-          hello<button>sdfsdfdsfs</button>
+          handle<button onClick={() => handleDeleteNode(nodeId)}>delete</button>
         </div>
       </div>
     </>
@@ -120,6 +142,9 @@ const mapDispatchToProps = (dispatch) => {
     onHoverNode: (nodeId) => dispatch(designerActions.hoverNode(nodeId)),
     onCreateNode: (widgetType, nodeId) =>
       dispatch(designerActions.createNode(widgetType, nodeId)),
+    onMoveNode: (nodeId, targetId, direction) =>
+      dispatch(designerActions.moveNode(nodeId, targetId, direction)),
+    onDeleteNode: (nodeId) => dispatch(designerActions.deleteNode(nodeId)),
   };
 };
 

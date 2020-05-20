@@ -37,7 +37,6 @@ export const CanvasContainer = styled.div`
       position: absolute;
       height: 1px;
       left: 0;
-      /* top: 0; */
       ${(props) => (props.direction === "before" ? "top: 0;" : "bottom: 0;")}
       z-index: 10;
       background: green;

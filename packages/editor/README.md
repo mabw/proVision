@@ -1,11 +1,3 @@
-# `editor`
-
-> TODO: description
-
-## Usage
-
-```
-const editor = require('editor');
-
-// TODO: DEMONSTRATE API
-```
+1. 优化重复渲染
+2. 操作句柄优化
+3. 拖动寻位

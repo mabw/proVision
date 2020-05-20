@@ -4,7 +4,9 @@ import { useDrag } from "react-dnd";
 import { WrapHolder } from "./widgetsPool.styles";
 
 const WidgetHolder = ({ widgetName }) => {
-  const [, drag] = useDrag({ item: { type: "box", widgetType: widgetName } });
+  const [, drag] = useDrag({
+    item: { type: "box", widgetType: widgetName, from: "pool" },
+  });
 
   return <WrapHolder ref={drag}>{widgetName}</WrapHolder>;
 };

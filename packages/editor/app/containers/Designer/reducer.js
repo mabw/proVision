@@ -74,6 +74,45 @@ const designerReducer = (state = initialState, action) =>
       case CONSTANTS.SET_EVENT_PROPS:
         draft.nodes[state.selectedNodeId].eventProps = action.props;
         break;
+      case CONSTANTS.DELETE_NODE:
+        if (action.nodeId === "root") break;
+        delete state.nodes[nodeId];
+        draft.nodes = state.nodes;
+        break;
+      case CONSTANTS.MOVE_NODE:
+        // If the node and target are in the same parent, update the position of the children array in parent node
+        // otherwise update the parentId and add the children to its array.
+        if (action.targetId === action.nodeId) break;
+        if (action.targetId === "root") break;
+        const targetParentId = state.nodes[action.targetId].parentId;
+        const currentNodeParentId = state.nodes[action.nodeId].parentId;
+        const targetParentChildrenList = Array.from(
+          state.nodes[targetParentId].childrenId
+        );
+        const targetIndex = targetParentChildrenList.indexOf(action.targetId);
+        if (targetParentId === currentNodeParentId) {
+          const currentNodeIndex = targetParentChildrenList.indexOf(
+            action.nodeId
+          );
+          targetParentChildrenList.splice(currentNodeIndex, 1); // remove the node id from the children array;
+        }
+        if (targetParentId !== currentNodeParentId) {
+          draft.nodes[action.nodeId].parentId = targetParentId; // reset the parent id.
+          const nodeParentChildrenList = Array.from(
+            state.nodes[currentNodeParentId].childrenId
+          );
+          const nodeIndex = nodeParentChildrenList.indexOf(action.nodeId);
+          nodeParentChildrenList.splice(nodeIndex, 1); // update the children in its parent
+          draft.nodes[currentNodeParentId].childrenId = nodeParentChildrenList;
+        }
+        if (action.direction === "before") {
+          targetParentChildrenList.splice(targetIndex, 0, action.nodeId); // insert the node id into the children of its parent
+        }
+        if (action.direction === "after") {
+          targetParentChildrenList.splice(targetIndex + 1, 0, action.nodeId); // insert the node id into the children of its parent
+        }
+        draft.nodes[targetParentId].childrenId = targetParentChildrenList;
+        break;
     }
   });
 

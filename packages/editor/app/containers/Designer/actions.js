@@ -15,11 +15,12 @@ const deleteNode = (nodeId) => {
   };
 };
 
-const moveNode = (nodeId, targetParentId) => {
+const moveNode = (nodeId, targetId, direction) => {
   return {
     type: CONSTANTS.MOVE_NODE,
     nodeId,
-    targetParentId,
+    targetId,
+    direction,
   };
 };
 
