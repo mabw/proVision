@@ -31,11 +31,21 @@ const WidgetHolder = ({
     e.stopPropagation();
   };
 
+  const handleDeleteNode = (e) => {
+    if (e.target.id !== "delete-root") {
+      const nodeIdToDelete = e.target.id.replace("delete-", "");
+      onDeleteNode(nodeIdToDelete);
+    }
+  };
+
   useEffect(() => {
     const currentDom = document.querySelector(`#${nodeId}`);
+    const deleteBtn = document.querySelector(`#delete-${nodeId}`);
     currentDom.addEventListener("click", handleDomClick);
+    deleteBtn.addEventListener("click", handleDeleteNode);
     return () => {
       currentDom.removeEventListener("click", handleDomClick);
+      deleteBtn.removeEventListener("click", handleDeleteNode);
     };
   }, []);
 
@@ -98,6 +108,7 @@ const WidgetHolder = ({
       isDragging: monitor.isDragging(),
     }),
   });
+
   return (
     <>
       <div
@@ -123,7 +134,7 @@ const WidgetHolder = ({
             e.stopPropagation();
           }}
         >
-          handle<button onClick={() => handleDeleteNode(nodeId)}>delete</button>
+          handle<button id={`delete-${nodeId}`}>delete</button>
         </div>
       </div>
     </>

@@ -22,7 +22,7 @@ const styleProps = {
   },
   uiSchema: {},
   formData: {
-    content: "demo string",
+    content: "root string",
   },
 };
 

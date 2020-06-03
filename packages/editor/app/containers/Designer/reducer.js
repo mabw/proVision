@@ -76,8 +76,17 @@ const designerReducer = (state = initialState, action) =>
         break;
       case CONSTANTS.DELETE_NODE:
         if (action.nodeId === "root") break;
-        delete state.nodes[nodeId];
-        draft.nodes = state.nodes;
+        const nodeParentId = state.nodes[action.nodeId].parentId;
+        draft.nodes[nodeParentId].childrenId = draft.nodes[
+          nodeParentId
+        ].childrenId.filter((node) => node !== action.nodeId);
+        delete draft.nodes[action.nodeId];
+        if (state.selectedNodeId === action.nodeId) {
+          draft.selectedNodeId = "root";
+        }
+        if (state.hoveredNodeId === action.nodeId) {
+          draft.hoveredNodeId = "";
+        }
         break;
       case CONSTANTS.MOVE_NODE:
         // If the node and target are in the same parent, update the position of the children array in parent node
