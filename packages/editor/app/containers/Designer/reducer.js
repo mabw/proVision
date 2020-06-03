@@ -11,7 +11,7 @@ export const initialState = {
     root: {
       type: "Root",
       displayName: "root",
-      parentId: null,
+      parentId: "",
       childrenId: ["abc123", "cde123"],
       index: 0,
       styleProps: { ...Root.styleProps.formData },
