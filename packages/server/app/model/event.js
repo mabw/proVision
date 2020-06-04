@@ -6,7 +6,7 @@ module.exports = (app) => {
     type: String,
     displayName: String,
     parentId: String,
-    childrenId: String,
+    childrenId: [String],
     index: Number,
     styleProps: Schema.Types.Mixed,
     settingProps: Schema.Types.Mixed,
@@ -26,7 +26,7 @@ module.exports = (app) => {
       isDeleted: Boolean,
       children: [NodeSchema],
     },
-    { timestamps: true }
+    { timestamps: true, versionKey: false }
   );
   return mongoose.model("Event", EventSchema, "event");
 };
