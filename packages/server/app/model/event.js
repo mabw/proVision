@@ -8,14 +8,14 @@ module.exports = (app) => {
     parentId: String,
     childrenId: String,
     index: Number,
-    styleProps: Mixed,
-    settingProps: Mixed,
-    eventProps: Mixed,
+    styleProps: Schema.Types.Mixed,
+    settingProps: Schema.Types.Mixed,
+    eventProps: Schema.Types.Mixed,
   });
 
   const EventSchema = new Schema(
     {
-      eventID: ObjectId,
+      eventID: Schema.Types.ObjectId,
       eventName: String,
       createdBy: String,
       updatedBy: String,

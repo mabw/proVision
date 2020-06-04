@@ -1,5 +1,9 @@
 {
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/editor",
+    "packages/widget",
+    "packages/publisher"
+  ],
   "version": "0.0.0",
   "useWorkspaces": true,
   "npmClient": "yarn"

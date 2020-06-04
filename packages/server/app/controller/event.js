@@ -2,7 +2,9 @@ const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
   // Get the events list
-  async index() {}
+  async index() {
+    this.ctx.body = "hello";
+  }
 
   // Delete the event
   async destroy(id) {}
