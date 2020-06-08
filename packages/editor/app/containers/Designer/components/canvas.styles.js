@@ -5,6 +5,8 @@ export const CanvasContainer = styled.div`
   min-width: 414px;
   height: 100%;
   overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 50px;
   .designer_selected-node {
     position: relative;
     outline: 1px dashed blue;

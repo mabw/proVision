@@ -3,6 +3,7 @@ module.exports = (app) => {
   const Schema = mongoose.Schema;
 
   const NodeSchema = new Schema({
+    id: String,
     type: String,
     displayName: String,
     parentId: String,

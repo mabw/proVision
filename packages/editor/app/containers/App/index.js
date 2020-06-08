@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import DesignerPage from "containers/Designer/Loadable";
 import DashboardPage from "containers/Dashboard/Loadable";
@@ -18,13 +18,13 @@ import GlobalStyle from "../../global-styles";
 
 export default function App() {
   return (
-    <div>
+    <Router>
       <Switch>
-        <Route exact path="/editor/:id" component={DesignerPage} />
-        <Route exact path="/" component={DashboardPage} />
+        <Route path="/editor/:id" component={DesignerPage} />
+        <Route exact path="/dashboard" component={DashboardPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </div>
+    </Router>
   );
 }

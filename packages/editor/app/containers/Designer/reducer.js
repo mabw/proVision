@@ -47,6 +47,9 @@ export const initialState = {
 const designerReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case CONSTANTS.INFLATE_NODES:
+        draft.nodes = action.nodes;
+        break;
       case CONSTANTS.CREATE_NODE:
         const newNodeId = "n" + cryptoRandomString({ length: 9 });
         draft.nodes[newNodeId] = {

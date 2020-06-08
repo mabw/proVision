@@ -9,13 +9,27 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import fetch from "../../utils/fetch";
+import fetchData from "../../utils/fetch";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
-  const { data, error } = useSWR("/api/v1/event", fetch);
+  const { data, error } = useSWR("/api/v1/event", fetchData);
+  const [eventName, SetEventName] = useState("");
+  let history = useHistory();
+
+  const handleOnCreate = async () => {
+    const { id } = await fetchData(`/api/v1/event`, {
+      method: "POST",
+      body: JSON.stringify({ eventName }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    setShowModal(false);
+    history.push(`/editor/${id}`);
+  };
 
   return (
     <>
@@ -40,7 +54,7 @@ const Dashboard = () => {
                 </thead>
                 <tbody>
                   {data.map((item) => (
-                    <tr>
+                    <tr key={item._id}>
                       <td>{item.eventName}</td>
                       <td>{item.createdBy}</td>
                       <td>{item.createdAt}</td>
@@ -68,7 +82,11 @@ const Dashboard = () => {
                 Event name
               </Form.Label>
               <Col sm="9">
-                <Form.Control type="text" placeholder="event name" />
+                <Form.Control
+                  type="text"
+                  placeholder="event name"
+                  onChange={(e) => SetEventName(e.target.value)}
+                />
               </Col>
             </Form.Group>
           </Form>
@@ -77,7 +95,7 @@ const Dashboard = () => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => setShowModal(false)}>
+          <Button variant="primary" onClick={handleOnCreate}>
             Create and go editor
           </Button>
         </Modal.Footer>

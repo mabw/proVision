@@ -26,6 +26,15 @@ module.exports = (appInfo) => {
   //   secret: "provision/12345",
   //   match: "/"
   // };
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+  config.cors = {
+    origin: "*",
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
+  };
 
   config.mongoose = {
     url: "mongodb://127.0.0.1:27017/provision",

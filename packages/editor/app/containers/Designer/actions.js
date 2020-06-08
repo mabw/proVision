@@ -1,5 +1,9 @@
 import CONSTANTS from "./constants";
 
+const inflateNodes = (nodes) => {
+  return { type: CONSTANTS.INFLATE_NODES, nodes };
+};
+
 const createNode = (widgetType, nodeId) => {
   return {
     type: CONSTANTS.CREATE_NODE,
@@ -67,6 +71,7 @@ const hoverNode = (nodeId) => {
 };
 
 export default {
+  inflateNodes,
   createNode,
   deleteNode,
   moveNode,

@@ -7,8 +7,10 @@ export const SET_EVENT_PROPS = "proVision/Designer/SET_EVENT_PROPS";
 export const TOGGLE_HIDDEN = "proVision/Designer/TOGGLE_HIDDEN";
 export const SELECT_NODE = "proVision/Designer/SELECT_NODE";
 export const HOVER_NODE = "proVision/Designer/HOVER_NODE";
+export const INFLATE_NODES = "proVision/Designer/INFLATE_NODES";
 
 export default {
+  INFLATE_NODES,
   CREATE_NODE,
   DELETE_NODE,
   MOVE_NODE,

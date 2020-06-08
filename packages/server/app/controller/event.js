@@ -13,11 +13,25 @@ class HomeController extends Controller {
   async destroy() {}
 
   // Save the changes
-  async update() {}
+  async update() {
+    const { id } = this.ctx.params;
+    const children = [];
+    Object.entries(this.ctx.request.body).forEach((item) => {
+      const node = item[1];
+      node.id = item[0];
+      children.push(node);
+    });
+
+    await this.ctx.model.Event.update({ _id: id }, { children });
+    this.ctx.body = id;
+  }
+
+  // Serialize the Json
+  async new() {}
 
   // Create a new event
-  async new() {
-    const { eventName } = this.ctx.request.query;
+  async create() {
+    const { eventName } = this.ctx.request.body;
     if (eventName) {
       const result = await this.ctx.model.Event.create({
         eventName: eventName,
@@ -28,6 +42,7 @@ class HomeController extends Controller {
         isDeleted: false,
         children: [
           {
+            id: "root",
             type: "Root",
             displayName: "root",
             parentId: "",
@@ -43,9 +58,6 @@ class HomeController extends Controller {
       this.ctx.body = { id: result["_id"] };
     }
   }
-
-  // Serialize the Json
-  async create() {}
 
   // Edit the event
   async edit() {
