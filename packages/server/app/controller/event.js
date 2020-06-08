@@ -63,7 +63,13 @@ class HomeController extends Controller {
   async edit() {
     const { id } = this.ctx.params;
     const result = await this.ctx.model.Event.findOne({ _id: id });
-    this.ctx.body = { nodes: [result.children], eventName: [result.eventName] };
+    const nodes = {};
+    result.children.forEach((item) => {
+      const nodeId = item.id;
+      delete item.id;
+      nodes[nodeId] = item;
+    });
+    this.ctx.body = { nodes, eventName: [result.eventName] };
   }
 
   // Preview the event

@@ -1,5 +1,6 @@
 import React, { memo, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { Container, Row, Col } from "react-bootstrap";
 import HTMLBackend from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
@@ -21,14 +22,13 @@ import designerActions from "./actions";
 Widgets.Root = Root;
 const key = "designer";
 
-const DesignerPage = () => {
+const DesignerPage = ({ inflateNode }) => {
   useInjectReducer({ key, reducer });
   let { id } = useParams();
-  const dispatch = useDispatch();
   const { data } = useSWR(`/api/v1/event/${id}/edit`, fetchData);
   useEffect(() => {
-    if (data.nodes && data.nodes.length > 0) {
-      dispatch(designerActions.inflate(data.nodes));
+    if (data && data.nodes !== "{}") {
+      inflateNode(data.nodes);
     }
   }, [data]);
 
@@ -60,4 +60,18 @@ const DesignerPage = () => {
   return <Spinner animation="border" variant="primary" />;
 };
 
-export default memo(DesignerPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inflateNode: (nodes) => dispatch(designerActions.inflateNodes(nodes)),
+  };
+};
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps
+);
+
+export default compose(
+  withConnect,
+  memo
+)(DesignerPage);
