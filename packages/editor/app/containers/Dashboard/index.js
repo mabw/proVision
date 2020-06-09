@@ -31,6 +31,14 @@ const Dashboard = () => {
     history.push(`/editor/${id}`);
   };
 
+  const handleOnPreview = (eventName) => {
+    window.open(
+      `http://localhost:3001/${eventName}?env=sta`,
+      `${eventName}`,
+      "height=736, width=414, top=0, left=0, toolbar=no, menubar=no, scrollbars=no,location=no, status=no"
+    );
+  };
+
   return (
     <>
       <Container>
@@ -59,7 +67,13 @@ const Dashboard = () => {
                       <td>{item.createdBy}</td>
                       <td>{item.createdAt}</td>
                       <td>
-                        <Link to={`/editor/${item._id}`}>edit</Link>
+                        <Link to={`/editor/${item._id}`}>edit</Link>{" "}
+                        <a
+                          href="#"
+                          onClick={() => handleOnPreview(item.eventName)}
+                        >
+                          preview
+                        </a>
                       </td>
                     </tr>
                   ))}

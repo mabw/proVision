@@ -38,7 +38,7 @@ const DesignerPage = ({ inflateNode }) => {
         <Container fluid>
           <Row>
             <Col>
-              <CanvasHeader />
+              <CanvasHeader eventName={data.eventName} />
             </Col>
           </Row>
           <Row>
