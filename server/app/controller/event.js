@@ -73,7 +73,17 @@ class HomeController extends Controller {
   }
 
   // Preview the event
-  async show() {}
+  async show() {
+    const { id } = this.ctx.params;
+    const result = await this.ctx.model.Event.findOne({ eventName: id });
+    const nodes = {};
+    result.children.forEach((item) => {
+      const nodeId = item.id;
+      delete item.id;
+      nodes[nodeId] = item;
+    });
+    this.ctx.body = { nodes, eventName: [result.eventName] };
+  }
 }
 
 module.exports = HomeController;
