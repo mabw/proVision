@@ -1,3 +1,6 @@
+const fs = require("fs");
+const path = require("path");
+
 const Controller = require("egg").Controller;
 
 class HomeController extends Controller {
@@ -27,7 +30,28 @@ class HomeController extends Controller {
   }
 
   // Serialize the Json
-  async new() {}
+  async new() {
+    const { id } = this.ctx.query;
+    const result = await this.ctx.model.Event.findOne({ _id: id });
+    const nodes = {};
+    result.children.forEach((item) => {
+      const nodeId = item.id;
+      delete item.id;
+      nodes[nodeId] = item;
+    });
+    let str = JSON.stringify({ nodes, eventName: [result.eventName] });
+    fs.writeFile(
+      path.join(__dirname, `../public/${result.eventName}.json`),
+      str,
+      (err) => {
+        if (err) {
+          console.log("err: ", err);
+          return;
+        }
+      }
+    );
+    this.ctx.body = {message:"success"};
+  }
 
   // Create a new event
   async create() {

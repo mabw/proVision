@@ -8,6 +8,11 @@ const devProxy = {
     changeOrigin: true,
     // logLevel: "debug",
   },
+  "/public/*": {
+    target: "http://localhost:7001/",
+    changeOrigin: true,
+    // logLevel: "debug",
+  },
 };
 
 const port = parseInt(process.env.PORT, 10) || 3001;
