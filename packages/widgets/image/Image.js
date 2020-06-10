@@ -1,11 +1,17 @@
 import React from "react";
+import { Wrapper } from "./image.style";
 
-export const Image = ({ source }) => {
+export const Image = ({ source, link }) => {
+  const handleOnClick = () => {
+    if (link) {
+      window.location.href = link;
+    }
+  };
+
   return (
-    <div>
+    <Wrapper onClick={handleOnClick}>
       <img src={source} />
-      <p>123</p>
-    </div>
+    </Wrapper>
   );
 };
 

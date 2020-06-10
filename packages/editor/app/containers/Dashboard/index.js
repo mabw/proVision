@@ -12,6 +12,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 
 import fetchData from "../../utils/fetch";
+import { WrapTitle, WrapButton } from "./styles";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -42,10 +43,12 @@ const Dashboard = () => {
   return (
     <>
       <Container>
-        <h1>Dashboard</h1>
+        <WrapTitle>Dashboard</WrapTitle>
         <Row>
           <Col>
-            <Button onClick={() => setShowModal(true)}>Create + </Button>
+            <WrapButton>
+              <Button onClick={() => setShowModal(true)}>Create + </Button>
+            </WrapButton>
           </Col>
         </Row>
         <Row>

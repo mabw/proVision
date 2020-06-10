@@ -4,37 +4,51 @@ import styled from "styled-components";
 const WrapRoot = styled.div`
   width: 414px;
   height: 736px;
-  background: white;
+  background-color: ${(props) => props.backgroundColor || "white"};
   margin: 0 auto;
   position: relative;
+  color: ${(props) => props.fontColor || "black"};
 `;
 
 const styleProps = {
   schema: {
     type: "object",
     properties: {
-      content: {
+      backgroundColor: {
         type: "string",
-        title: "text",
-        default: "default",
+        title: "background color",
+        default: "white",
+      },
+      fontColor: {
+        type: "string",
+        title: "font color",
+        default: "black",
       },
     },
   },
   uiSchema: {},
   formData: {
-    content: "root string",
+    backgroundColor: "white",
+    fontColor: "black",
   },
 };
 
-const RootWidget = ({ children }) => {
-  return <WrapRoot>{children}</WrapRoot>;
+const RootWidget = ({ children, backgroundColor, fontColor }) => {
+  return (
+    <WrapRoot backgroundColor={backgroundColor} fontColor={fontColor}>
+      {children}
+    </WrapRoot>
+  );
+};
+
+RootWidget.defaultProps = {
+  backgroundColor: "white",
+  fontColor: "black",
 };
 
 const Root = {
   template: RootWidget,
   styleProps,
-  settingProps: styleProps,
-  eventProps: styleProps,
 };
 
 export { Root };

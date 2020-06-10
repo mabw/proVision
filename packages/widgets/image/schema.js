@@ -1,72 +1,34 @@
 const styleProps = {
   schema: {
-    title: "Schema default properties",
     type: "object",
     properties: {
-      valuesInFormData: {
-        title: "Values in form data",
-        $ref: "#/definitions/defaultsExample",
-      },
-      noValuesInFormData: {
-        title: "No values in form data",
-        $ref: "#/definitions/defaultsExample",
-      },
-    },
-    definitions: {
-      defaultsExample: {
-        type: "object",
-        properties: {
-          scalar: {
-            title: "Scalar",
-            type: "string",
-            default: "scalar default",
-          },
-          array: {
-            title: "Array",
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                nested: {
-                  title: "Nested array",
-                  type: "string",
-                  default: "nested array default",
-                },
-              },
-            },
-          },
-          object: {
-            title: "Object",
-            type: "object",
-            properties: {
-              nested: {
-                title: "Nested object",
-                type: "string",
-                default: "nested object default",
-              },
-            },
-          },
-        },
+      source: {
+        type: "string",
+        title: "background",
       },
     },
   },
   uiSchema: {},
   formData: {
-    valuesInFormData: {
-      scalar: "value",
-      array: [
-        {
-          nested: "nested array value",
-        },
-      ],
-      object: {
-        nested: "nested object value",
-      },
-    },
-    noValuesInFormData: {
-      array: [{}, {}],
-    },
+    source:
+      "//m.360buyimg.com/babel/s2002x392_jfs/t1/87496/32/17224/122060/5e845caaE6b28e1d0/0b5102c16c08ad84.jpg!q70.dpg",
   },
 };
 
-export default { styleProps, settingProps: styleProps, eventProps: styleProps };
+const eventProps = {
+  schema: {
+    type: "object",
+    properties: {
+      link: {
+        type: "string",
+        title: "Link to",
+      },
+    },
+  },
+  uiSchema: {},
+  formData: {
+    link: "",
+  },
+};
+
+export default { styleProps, eventProps };

@@ -16,7 +16,6 @@
     "@storybook/react": "^5.3.18",
     "babel-loader": "^8.1.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "styled-components": "^5.1.0"
+    "react-dom": "^16.13.1"
   }
 }

@@ -62,17 +62,21 @@ const WidgetHolder = ({
         const hoverMiddleY =
           (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
         const clientOffset = monitor.getClientOffset();
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-        if (hoverClientY < hoverMiddleY) {
-          onMoveNode(item.nodeId, nodeId, "before");
-        }
-        if (hoverClientY > hoverMiddleY) {
-          onMoveNode(item.nodeId, nodeId, "after");
+        if (clientOffset) {
+          const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+          if (hoverClientY < hoverMiddleY) {
+            onMoveNode(item.nodeId, nodeId, "before");
+          }
+          if (hoverClientY > hoverMiddleY) {
+            onMoveNode(item.nodeId, nodeId, "after");
+          }
         }
       }
       if (monitor.didDrop()) return; // stop propagation, in case of adding multiply components
       setCoveredId("");
-      onCreateNode(item.widgetType, nodeId);
+      if (item.from !== "canvas") {
+        onCreateNode(item.widgetType, nodeId);
+      }
     },
     hover: (item, monitor) => {
       const dragIndex = item.nodeId;

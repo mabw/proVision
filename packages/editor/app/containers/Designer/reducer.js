@@ -1,9 +1,7 @@
 import produce from "immer";
-import Widgets from "widgets";
 import cryptoRandomString from "crypto-random-string";
 
 import { nodesOperator } from "../../utils/nodesOperator";
-import { Root } from "./components/RootWidget";
 import CONSTANTS from "./constants";
 
 export const initialState = {
@@ -12,31 +10,11 @@ export const initialState = {
       type: "Root",
       displayName: "root",
       parentId: "",
-      childrenId: ["abc123", "cde123"],
-      index: 0,
-      styleProps: { ...Root.styleProps.formData },
-      settingProps: { ...Root.settingProps.formData },
-      eventProps: { ...Root.eventProps.formData },
-    },
-    abc123: {
-      type: "BasicText",
-      displayName: "textDemo1",
-      parentId: "root",
       childrenId: [],
       index: 0,
-      styleProps: { ...Widgets.BasicText.styleProps.formData },
-      settingProps: { ...Widgets.BasicText.settingProps.formData },
-      eventProps: { ...Widgets.BasicText.eventProps.formData },
-    },
-    cde123: {
-      type: "BasicText",
-      displayName: "textDemo2",
-      parentId: "root",
-      childrenId: [],
-      index: 1,
-      styleProps: { ...Widgets.BasicText.styleProps.formData },
-      settingProps: { ...Widgets.BasicText.settingProps.formData },
-      eventProps: { ...Widgets.BasicText.eventProps.formData },
+      styleProps: {},
+      settingProps: {},
+      eventProps: {},
     },
   },
   selectedNodeId: "root",

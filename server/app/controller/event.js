@@ -6,9 +6,9 @@ const Controller = require("egg").Controller;
 class HomeController extends Controller {
   // Get the events list
   async index() {
-    const result = await this.ctx.model.Event.find().select(
-      "eventID eventName createdBy createdAt"
-    );
+    const result = await this.ctx.model.Event.find()
+      .sort({ updatedAt: -1 })
+      .select("eventID eventName createdBy createdAt");
     this.ctx.body = result;
   }
 
@@ -50,7 +50,7 @@ class HomeController extends Controller {
         }
       }
     );
-    this.ctx.body = {message:"success"};
+    this.ctx.body = { message: "success" };
   }
 
   // Create a new event

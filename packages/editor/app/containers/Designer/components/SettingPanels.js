@@ -27,11 +27,19 @@ const SettingPanels = ({
 }) => {
   const selectedNodeType = nodes[selectedNodeId].type;
   const styleFormSchema = Widgets[selectedNodeType].styleProps.schema;
-  const settingFormSchema = Widgets[selectedNodeType].settingProps.schema;
-  const eventFormSchema = Widgets[selectedNodeType].eventProps.schema;
+  const settingForm =
+    Widgets[selectedNodeType].settingProps &&
+    Widgets[selectedNodeType].settingProps.schema;
+  const eventForm =
+    Widgets[selectedNodeType].eventProps &&
+    Widgets[selectedNodeType].eventProps.schema;
 
   return (
     <>
+      <div>
+        <strong>Widget information</strong>
+        <p>Widget id: {selectedNodeId} </p>
+      </div>
       {!isEmpty(styleFormSchema) && (
         <>
           <strong>Style setting</strong>
@@ -45,11 +53,11 @@ const SettingPanels = ({
           </Form>
         </>
       )}
-      {!isEmpty(settingFormSchema) && (
+      {!isEmpty(settingForm) && (
         <>
           <strong>Props setting</strong>
           <Form
-            schema={settingFormSchema}
+            schema={settingForm}
             formData={settingFormData}
             onChange={(dateSet) => onChangeSettingForm(dateSet.formData)}
           >
@@ -57,11 +65,11 @@ const SettingPanels = ({
           </Form>
         </>
       )}
-      {!isEmpty(eventFormSchema) && (
+      {!isEmpty(eventForm) && (
         <>
           <strong>Event setting</strong>
           <Form
-            schema={eventFormSchema}
+            schema={eventForm}
             formData={eventFormData}
             onChange={(dateSet) => onChangeEventForm(dateSet.formData)}
           >
