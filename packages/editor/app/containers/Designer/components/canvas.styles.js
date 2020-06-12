@@ -28,13 +28,22 @@ export const CanvasContainer = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
+    z-index: 3;
     margin-top: -20px;
-    outline: 1px solid red;
-    background: rgba(255, 100, 100, 0.85);
+    background: #3b97e3;
   }
+
   .designer_node:hover .designer_widget-holder {
     pointer-events: none;
+  }
+  .designer_toolbar-item {
+    padding: 5px 7px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    width: 26px;
+    vertical-align: middle;
+    display: inline-block;
+    color: white;
   }
   .designer_covered-widget {
     position: relative;

@@ -138,7 +138,11 @@ const WidgetHolder = ({
             e.stopPropagation();
           }}
         >
-          handle<button id={`delete-${nodeId}`}>delete</button>
+          <div className="fa fa-arrows designer_toolbar-item" />
+          <div
+            id={`delete-${nodeId}`}
+            className="fa fa-trash-o designer_toolbar-item"
+          />
         </div>
       </div>
     </>
