@@ -8,6 +8,18 @@ const WrapRoot = styled.div`
   margin: 0 auto;
   position: relative;
   color: ${(props) => props.fontColor || "black"};
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0px;
+    opacity: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const styleProps = {

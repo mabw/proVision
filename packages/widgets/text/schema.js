@@ -5,12 +5,17 @@ const styleProps = {
       fontColor: {
         type: "string",
         title: "font color",
+        default: "#000000",
       },
     },
   },
-  uiSchema: {},
+  uiSchema: {
+    fontColor: {
+      "ui:widget": "color",
+    },
+  },
   formData: {
-    fontColor: "",
+    fontColor: "#000000",
   },
 };
 

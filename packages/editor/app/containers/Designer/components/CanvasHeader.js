@@ -14,6 +14,16 @@ const WrapHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  .btn-link {
+    color: white;
+  }
+  background: #444444;
+  z-index: 3;
 `;
 
 const CanvasHeader = ({ nodes, eventName }) => {
@@ -54,14 +64,28 @@ const CanvasHeader = ({ nodes, eventName }) => {
   return (
     <WrapHeader>
       <Link to={"/dashboard"}>
-        <Button>Back to Dashboard</Button>
+        <Button variant="link" size="sm">
+          Back to Dashboard
+        </Button>
       </Link>
       <div>
-        <Button disabled={saving} onClick={handleOnSave}>
+        <Button
+          variant="link"
+          size="sm"
+          disabled={saving}
+          onClick={handleOnSave}
+        >
           {saving ? "Saving..." : "Save"}
         </Button>
-        <Button onClick={handleOnPreview}>Preview</Button>
-        <Button disabled={publishing} onClick={handleOnPublish}>
+        <Button variant="link" size="sm" onClick={handleOnPreview}>
+          Preview
+        </Button>
+        <Button
+          variant="link"
+          size="sm"
+          disabled={publishing}
+          onClick={handleOnPublish}
+        >
           {publishing ? "Publishing..." : "Publish"}
         </Button>
       </div>

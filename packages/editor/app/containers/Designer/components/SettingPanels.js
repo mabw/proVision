@@ -14,6 +14,7 @@ import {
   makeSelectSelectedNodeId,
 } from "../selectors";
 import designerActions from "../actions";
+import { PanelContainer } from "./settingPanles.style";
 
 const SettingPanels = ({
   styleFormData,
@@ -26,58 +27,57 @@ const SettingPanels = ({
   nodes,
 }) => {
   const selectedNodeType = nodes[selectedNodeId].type;
-  const styleFormSchema = Widgets[selectedNodeType].styleProps.schema;
-  const settingForm =
-    Widgets[selectedNodeType].settingProps &&
-    Widgets[selectedNodeType].settingProps.schema;
-  const eventForm =
-    Widgets[selectedNodeType].eventProps &&
-    Widgets[selectedNodeType].eventProps.schema;
+  const styleProps = Widgets[selectedNodeType].styleProps;
+  const settingProps = Widgets[selectedNodeType].settingProps;
+  const eventProps = Widgets[selectedNodeType].eventProps;
 
   return (
-    <>
-      <div>
-        <strong>Widget information</strong>
+    <PanelContainer>
+      <section>
+        <div className="section-title">Widget information</div>
         <p>Widget id: {selectedNodeId} </p>
-      </div>
-      {!isEmpty(styleFormSchema) && (
-        <>
-          <strong>Style setting</strong>
+      </section>
+      {!isEmpty(styleProps) && (
+        <section>
+          <div className="section-title">Style setting</div>
           <Form
             tagName="div"
-            schema={styleFormSchema}
+            schema={styleProps.schema}
+            uiSchema={styleProps.uiSchema}
             formData={styleFormData}
             onChange={(dateSet) => onChangeStyleForm(dateSet.formData)}
           >
             <button type="submit" className="d-none" />
           </Form>
-        </>
+        </section>
       )}
-      {!isEmpty(settingForm) && (
-        <>
-          <strong>Props setting</strong>
+      {!isEmpty(settingProps) && (
+        <section>
+          <div className="section-title">Props setting</div>
           <Form
-            schema={settingForm}
+            schema={settingProps.schema}
             formData={settingFormData}
+            uiSchema={settingProps.uiSchema}
             onChange={(dateSet) => onChangeSettingForm(dateSet.formData)}
           >
             <button type="submit" className="d-none" />
           </Form>
-        </>
+        </section>
       )}
-      {!isEmpty(eventForm) && (
-        <>
-          <strong>Event setting</strong>
+      {!isEmpty(eventProps) && (
+        <section>
+          <div className="section-title">Event setting</div>
           <Form
-            schema={eventForm}
+            schema={eventProps.schema}
             formData={eventFormData}
+            uiSchema={eventProps.uiSchema}
             onChange={(dateSet) => onChangeEventForm(dateSet.formData)}
           >
             <button type="submit" className="d-none" />
           </Form>
-        </>
+        </section>
       )}
-    </>
+    </PanelContainer>
   );
 };
 
