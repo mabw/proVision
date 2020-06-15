@@ -36,4 +36,46 @@ export const PanelContainer = styled.div`
     position: relative;
     color: #ddd;
   }
+  legend {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    color: #b9a5a6;
+    border: 0;
+  }
+  .btn-add {
+    .glyphicon-plus {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      &:before {
+        content: "\f067";
+      }
+      &:after,
+      &:before {
+        box-sizing: border-box;
+      }
+    }
+  }
+  .btn-danger {
+    flex: 0;
+    .glyphicon-remove {
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      &:before {
+        content: "\f00d";
+      }
+      &:after,
+      &:before {
+        box-sizing: border-box;
+      }
+    }
+  }
 `;
