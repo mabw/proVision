@@ -19,6 +19,11 @@ const settingProps = {
   schema: {
     type: "object",
     properties: {
+      columns: {
+        type: "number",
+        title: "columns in row",
+        default: 1,
+      },
       items: {
         type: "array",
         title: "A list of fixed items",
@@ -29,11 +34,12 @@ const settingProps = {
             properties: {
               source: {
                 type: "string",
-                default: "lorem ipsum",
+                default:
+                  "//m.360buyimg.com/babel/s2002x392_jfs/t1/87496/32/17224/122060/5e845caaE6b28e1d0/0b5102c16c08ad84.jpg!q70.dpg",
               },
               link: {
                 type: "string",
-                default: "lorem ipsum123123",
+                default: "http://www.baidu.com",
               },
             },
           },
@@ -44,11 +50,12 @@ const settingProps = {
           properties: {
             source: {
               type: "string",
-              default: "lorem ipsum",
+              default:
+                "//m.360buyimg.com/babel/s2002x392_jfs/t1/87496/32/17224/122060/5e845caaE6b28e1d0/0b5102c16c08ad84.jpg!q70.dpg",
             },
             link: {
               type: "string",
-              default: "lorem ipsum123123",
+              default: "http://www.baidu.com",
             },
           },
         },
@@ -57,6 +64,7 @@ const settingProps = {
   },
   uiSchema: {},
   formData: {
+    columns: 1,
     items: [
       {
         source:
