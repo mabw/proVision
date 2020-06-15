@@ -1,23 +1,25 @@
 import React from "react";
 
-import { Wrapper } from "./image.style";
+import { Wrapper } from "./imageGroup.style";
 import schema from "./schema";
 
-export const Image = ({ formData }) => {
+export const Images = ({ formData }) => {
   const handleOnClick = () => {
     if (link) {
       window.location.href = link;
     }
   };
   const { items } = formData;
+  console.log("items: ", items);
 
   return (
     <Wrapper onClick={handleOnClick}>
-      <img src={source} />
+      <div>123123</div>
+      <img src={""} />
     </Wrapper>
   );
 };
 
-Image.defaultProps = {
+Images.defaultProps = {
   formData: schema.settingProps.formData,
 };

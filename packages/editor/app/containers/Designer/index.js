@@ -25,15 +25,6 @@ const Wrapper = styled.div`
   user-select: none;
   font-size: 0.75rem;
   font-weight: lighter;
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
-  ::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-  }
 `;
 
 Widgets.Root = Root;

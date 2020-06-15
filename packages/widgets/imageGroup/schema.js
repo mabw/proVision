@@ -17,28 +17,35 @@ const styleProps = {
 
 const settingProps = {
   schema: {
-    type: "object",
-    properties: {
-      items: {
-        type: "array",
-        items: {
-          type: "object",
-          allOf: [
-            {
-              properties: {
-                source: {
-                  type: "string",
-                },
-              },
-            },
-            {
-              properties: {
-                link: {
-                  type: "string",
-                },
-              },
-            },
-          ],
+    type: "array",
+    title: "A list of fixed items",
+    items: [
+      {
+        title: "Additional item",
+        type: "object",
+        properties: {
+          source: {
+            type: "string",
+            default: "lorem ipsum",
+          },
+          link: {
+            type: "string",
+            default: "lorem ipsum123123",
+          },
+        },
+      },
+    ],
+    additionalItems: {
+      title: "Additional item",
+      type: "object",
+      properties: {
+        source: {
+          type: "string",
+          default: "lorem ipsum",
+        },
+        link: {
+          type: "string",
+          default: "lorem ipsum123123",
         },
       },
     },

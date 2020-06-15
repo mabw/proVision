@@ -1,13 +1,13 @@
-import { Image } from "./Image";
+import { Images } from "./ImageGroup";
 import schema from "./schema";
 
 const { styleProps, settingProps, eventProps } = schema;
 
-const BasicImage = {
-  template: Image,
+const ImageGroup = {
+  template: Images,
   styleProps,
   settingProps,
   eventProps,
 };
 
-export { BasicImage };
+export { ImageGroup };
