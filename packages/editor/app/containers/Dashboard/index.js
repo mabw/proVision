@@ -33,8 +33,12 @@ const Dashboard = () => {
   };
 
   const handleOnPreview = (eventName) => {
+    const url =
+      process.env.NODE_ENV === "production"
+        ? "publisher.mabingwen.xyz"
+        : "localhost:3001";
     window.open(
-      `http://localhost:3001/${eventName}?env=sta`,
+      `http://${url}/${eventName}?env=sta`,
       `${eventName}`,
       "height=736, width=414, top=0, left=0, toolbar=no, menubar=no, scrollbars=no,location=no, status=no"
     );

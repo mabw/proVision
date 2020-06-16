@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "egg-scripts start --port=7002 --daemon --title=proVision-server",
+    "stop": "egg-scripts stop --title=proVision-server",
     "dev": "egg-bin dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,7 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "egg": "^2.26.1",
-    "egg-mongoose": "^3.2.0"
+    "egg-mongoose": "^3.2.0",
+    "egg-scripts": "^2.13.0"
   },
   "devDependencies": {
     "egg-bin": "^4.14.1"
